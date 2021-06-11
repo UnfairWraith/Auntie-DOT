@@ -26,13 +26,14 @@ def import_and_predict(image_data, model):
         
         return prediction
 
-model = tf.keras.models.load_model('D:/GIT/Auntie-DOT/rps/my_model.hdf5')
+model = tf.keras.models.load_model('D:/GIT/Auntie-DOT/CN345/Auntie-DOT_CN345.hdf5')
 
     
 cap = cv2.VideoCapture(0)
 
 if (cap.isOpened()):
     print("Camera OK")
+    print("No wife, friend only. ~ 白上フブキ")
 else:
     cap.open()
 
