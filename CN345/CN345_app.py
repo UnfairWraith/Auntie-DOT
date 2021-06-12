@@ -17,7 +17,7 @@ def import_and_predict(image_data, model):
         
         return prediction
 
-model = tf.keras.models.load_model('D:/GIT/Auntie-DOT/rps/Auntie-DOT_CN345.hdf5') #loading a trained model
+model = tf.keras.models.load_model('D:/GIT/Auntie-DOT/CN345/Auntie-DOT_CN345.hdf5') #loading a trained model
 
 st.write("""
          # Chinese number 3-4-5 Hand Sign Prediction
@@ -36,11 +36,11 @@ else:
     prediction = import_and_predict(image, model)
     
     if np.argmax(prediction) == 0:
-        st.write("It is a paper!")
+        st.write("It is Chinese hand gesture 3")
     elif np.argmax(prediction) == 1:
-        st.write("It is a rock!")
+        st.write("It is Chinese hand gesture 4")
     else:
-        st.write("It is a scissor!")
+        st.write("It is Chinese hand gesture 5")
     
-    st.text("Probability (0: Paper, 1: Rock, 2: Scissor)")
+    st.text("Probability (0: CN3, 1: CN4, 2: CN5)")
     st.write(prediction)
