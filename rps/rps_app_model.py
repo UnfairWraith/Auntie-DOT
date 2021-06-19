@@ -59,8 +59,8 @@ def model_output_for_TL (pre_trained_model, last_output):
     return model
 
 
-train_dir = os.path.join('D:/GIT/Auntie-DOT/rps/datasets/train') #change to ur own directory.
-test_dir = os.path.join('D:/GIT/Auntie-DOT/rps/datasets/test') #change to ur own directory.
+train_dir = os.path.join('datasets/train') #change to ur own directory.
+test_dir = os.path.join('datasets/test') #change to ur own directory.
 #using windows commans to set to the default path. --> Command prompt.
 
 train_generator, validation_generator, test_generator = image_gen_w_aug(train_dir, test_dir)

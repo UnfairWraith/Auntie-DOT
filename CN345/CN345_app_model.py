@@ -19,19 +19,19 @@ def image_gen_w_aug(train_parent_directory, test_parent_directory):
     
     train_generator = train_datagen.flow_from_directory(train_parent_directory,
                                                        target_size = (75,75),
-                                                       batch_size = 214,
+                                                       batch_size = 80,
                                                        class_mode = 'categorical',
                                                        subset='training')
     
     val_generator = train_datagen.flow_from_directory(train_parent_directory,
                                                           target_size = (75,75),
-                                                          batch_size = 37,
+                                                          batch_size = 15,
                                                           class_mode = 'categorical',
                                                           subset = 'validation')
     
     test_generator = test_datagen.flow_from_directory(test_parent_directory,
                                                      target_size=(75,75),
-                                                     batch_size = 37, #call by batches of 37
+                                                     batch_size = 15, #call by batches of 37
                                                      class_mode = 'categorical')
     
     return train_generator, val_generator, test_generator
@@ -53,8 +53,8 @@ def model_output_for_TL (pre_trained_model, last_output):
     return model
 
 
-train_dir = os.path.join('D:/GIT/Auntie-DOT/CN345/assets/train') #change to ur own directory.
-test_dir = os.path.join('D:/GIT/Auntie-DOT/CN345/assets/test') #change to ur own directory.
+train_dir = os.path.join('δεδομένα/train') #change to ur own directory.
+test_dir = os.path.join('δεδομένα/test') #change to ur own directory.
 #using windows commans to set to the default path. --> Command prompt.
 
 train_generator, validation_generator, test_generator = image_gen_w_aug(train_dir, test_dir)
@@ -77,7 +77,7 @@ model_TL.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['ac
 history_TL = model_TL.fit(
 train_generator,
 steps_per_epoch=10,
-epochs=10,
+epochs=7,
 verbose=1,
 validation_data = validation_generator)
 
