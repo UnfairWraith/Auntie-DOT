@@ -19,19 +19,19 @@ def image_gen_w_aug(train_parent_directory, test_parent_directory):
     
     train_generator = train_datagen.flow_from_directory(train_parent_directory,
                                                        target_size = (75,75),
-                                                       batch_size = 80,
+                                                       batch_size = 100,
                                                        class_mode = 'categorical',
                                                        subset='training')
     
     val_generator = train_datagen.flow_from_directory(train_parent_directory,
                                                           target_size = (75,75),
-                                                          batch_size = 15,
+                                                          batch_size = 20,
                                                           class_mode = 'categorical',
                                                           subset = 'validation')
     
     test_generator = test_datagen.flow_from_directory(test_parent_directory,
                                                      target_size=(75,75),
-                                                     batch_size = 15, #call by batches of 37
+                                                     batch_size = 5, #call by batches of 37
                                                      class_mode = 'categorical')
     
     return train_generator, val_generator, test_generator
