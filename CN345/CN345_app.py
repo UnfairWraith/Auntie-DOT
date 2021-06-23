@@ -42,5 +42,5 @@ else:
     else:
         st.write("It is Chinese hand gesture 5")
     
-    st.text("Probability (0: Five, 1: Four, 2: Three)")
+    st.text("Probability (0: Three, 1: Four, 2: Five)")
     st.write(prediction)
