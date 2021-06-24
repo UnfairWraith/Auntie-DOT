@@ -26,7 +26,7 @@ filepath2 = r'D:\GIT\Auntie-DOT\CN345\DumpC\\'
 
 for filename in os.listdir(filepath):
     filenumber += 1
-    os.rename(filepath + filename, filepath2 + 'CN5_BW'+ str(filenumber)+ '.jpg')
+    os.rename(filepath + filename, filepath2 + 'CN5_IVBW'+ str(filenumber)+ '.jpg')
 
 
 
