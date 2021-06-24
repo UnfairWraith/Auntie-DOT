@@ -20,13 +20,13 @@ import re
 #listA = ['emp']
 #listA = ReadToList(listA)
 
-filenumber=304        #Starting number for Audio Files
+filenumber=409        #Starting number for Audio Files
 filepath = r'D:\GIT\Auntie-DOT\CN345\DumpB\\'
 filepath2 = r'D:\GIT\Auntie-DOT\CN345\DumpC\\'
 
 for filename in os.listdir(filepath):
     filenumber += 1
-    os.rename(filepath + filename, filepath2 + 'CN4_'+ str(filenumber)+ '.jpg')
+    os.rename(filepath + filename, filepath2 + 'CN5_BW'+ str(filenumber)+ '.jpg')
 
 
 
