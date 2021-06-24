@@ -20,7 +20,7 @@ import re
 #listA = ['emp']
 #listA = ReadToList(listA)
 
-filenumber=409        #Starting number for Audio Files
+filenumber=0        #Starting number for Audio Files
 filepath = r'D:\GIT\Auntie-DOT\CN345\DumpB\\'
 filepath2 = r'D:\GIT\Auntie-DOT\CN345\DumpC\\'
 
