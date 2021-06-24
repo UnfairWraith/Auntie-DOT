@@ -1,4 +1,4 @@
-Test 
+Test  	Total  Original
 3	24	6
 
 4	20	5	
