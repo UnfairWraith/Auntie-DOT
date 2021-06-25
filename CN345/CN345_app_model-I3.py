@@ -20,12 +20,12 @@ def image_gen_w_aug(train_parent_directory, test_parent_directory, valid_parent_
     
     train_generator = train_datagen.flow_from_directory(train_parent_directory,
                                                        target_size = (75,75),
-                                                       batch_size = 700,
+                                                       batch_size = 720,
                                                        class_mode = 'categorical')
     
     val_generator = train_datagen.flow_from_directory(valid_parent_directory,
                                                           target_size = (75,75),
-                                                          batch_size = 50,
+                                                          batch_size = 55,
                                                           class_mode = 'categorical')
     
     test_generator = test_datagen.flow_from_directory(test_parent_directory,
@@ -85,4 +85,4 @@ tf.keras.models.save_model(model_TL,'Auntie-DOT_I3.hdf5') #will be save as this 
 
 
 #HALO LORE
-#Auntie DOT is UNSC's (dumb) AI used by NOBLE team during the fall of REACH, it is one of the AI's used by ONI before the discovery of forerunner tech which allowed humanity to create (smart) AI such as CORTANA.
+#Auntie DOT is UNSC's 'dumb' AI used by NOBLE team during the fall of REACH, it is one of the AI's used by ONI before the discovery of forerunner technology which enabled humanity to create 'smart' AI.

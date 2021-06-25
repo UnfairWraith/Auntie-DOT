@@ -50,11 +50,11 @@ while (True):
     #print(prediction)
 
     if np.argmax(prediction) == 0:
-        predict="It is a paper!"
+        predict="Chinese Number 3"
     elif np.argmax(prediction) == 1:
-        predict="It is a rock!"
+        predict="Chinese Number 4"
     else:
-        predict="It is a scissor!"
+        predict="Chinese Number 5"
     
     cv2.putText(original, predict, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
     cv2.imshow("Classification", original)
