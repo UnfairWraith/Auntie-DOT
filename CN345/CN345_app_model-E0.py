@@ -1,20 +1,36 @@
-
-import efficientnet.keras as efn
+from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.layers import Flatten, Dense, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
+import matplotlib.pyplot as plt
 import os
 
-def image_gen_w_aug(train_parent_directory, test_parent_directory, validation_dir):
+def image_gen_w_aug(train_parent_directory, test_parent_directory, valid_parent_directory):
     
-    train_datagen = ImageDataGenerator(rescale = 1./255., rotation_range = 40, width_shift_range = 0.2, height_shift_range = 0.2, shear_range = 0.2, zoom_range = 0.2, horizontal_flip = True)
-
-    test_datagen = ImageDataGenerator(rescale = 1.0/255.)
-
-    train_generator = train_datagen.flow_from_directory(train_dir, batch_size = 20, class_mode = 'binary', target_size = (224, 224))
-
-    val_generator = test_datagen.flow_from_directory( validation_dir, batch_size = 20, class_mode = 'binary', target_size = (224, 224))
+    train_datagen = ImageDataGenerator(rescale=1/255, #scaling
+                                      rotation_range = 30,   #rotation 
+                                      zoom_range = 0.2, 
+                                      width_shift_range=0.1,  
+                                      height_shift_range=0.1,
+                                      validation_split = 0.15) #split to 15% of validation set.
+    
+    test_datagen = ImageDataGenerator(rescale=1/255)
+    
+    train_generator = train_datagen.flow_from_directory(train_parent_directory,
+                                                       target_size = (75,75),
+                                                       batch_size = 600,
+                                                       class_mode = 'categorical')
+    
+    val_generator = train_datagen.flow_from_directory(valid_parent_directory,
+                                                          target_size = (75,75),
+                                                          batch_size = 46,
+                                                          class_mode = 'categorical')
+    
+    test_generator = test_datagen.flow_from_directory(test_parent_directory,
+                                                     target_size=(75,75),
+                                                     batch_size = 7, #call by batches of 37
+                                                     class_mode = 'categorical')
     
     return train_generator, val_generator, test_generator
 
@@ -34,15 +50,25 @@ def model_output_for_TL (pre_trained_model, last_output):
     
     return model
 
+def plot_hist(hist):
+    plt.plot(hist.history["accuracy"])
+    plt.plot(hist.history["val_accuracy"])
+    plt.title("model accuracy")
+    plt.ylabel("accuracy")
+    plt.xlabel("epoch")
+    plt.legend(["train", "validation"], loc="upper left")
+    plt.show()
 
 train_dir = os.path.join('δεδομένα/train') #change to ur own directory.
 test_dir = os.path.join('δεδομένα/test') #change to ur own directory.
-val_dir = os.path.join('δεδομένα/valid') #change to ur own directory.
+valid_dir = os.path.join('δεδομένα/valid') #change to ur own directory.
 #using windows commans to set to the default path. --> Command prompt.
 
-train_generator, validation_generator, test_generator = image_gen_w_aug(train_dir, test_dir, val_dir)
+train_generator, validation_generator, test_generator = image_gen_w_aug(train_dir, test_dir, valid_dir)
 
-pre_trained_model =  efn.EfficientNetB0(input_shape = (224, 224, 3), include_top = False, weights = 'imagenet')
+pre_trained_model = InceptionV3(input_shape = (75, 75, 3), 
+                                include_top = False, 
+                                weights = 'imagenet')
 
 for layer in pre_trained_model.layers:
   layer.trainable = False
@@ -51,19 +77,23 @@ last_layer = pre_trained_model.get_layer('mixed3')
 last_output = last_layer.output  #last layer is output.
 
 model_TL = model_output_for_TL(pre_trained_model, last_output)
-model_TL.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model_TL.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
  #hyperparameters.
  #epoch is the number of training rounds
 history_TL = model_TL.fit(
 train_generator,
-steps_per_epoch=10,
+steps_per_epoch=12,
 epochs=10,
-verbose=2,
+verbose=1,
 validation_data = validation_generator)
+
+
+plot_hist(history_TL)
+
 
 tf.keras.models.save_model(model_TL,'Auntie-DOT_E0.hdf5') #will be save as this file
 
 
 #HALO LORE
-#Auntie DOT is UNSC's (dumb) AI used by NOBLE team during the fall of REACH, it is one of the AI's used by ONI before the discovery of forerunner tech which allowed humanity to create (smart) AI such as CORTANA.
+#Auntie DOT is UNSC's 'dumb' AI used by NOBLE team during the fall of REACH, it is one of the AI's used by ONI before the discovery of forerunner technology which enabled humanity to create 'smart' AI.
