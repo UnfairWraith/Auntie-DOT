@@ -30,17 +30,17 @@ def image_gen_w_aug(train_parent_directory, test_parent_directory, valid_parent_
     
     train_generator = train_datagen.flow_from_directory(train_parent_directory,
                                                        target_size = (75,75),
-                                                       batch_size = 337,
+                                                       batch_size = 102,
                                                        class_mode = 'categorical')
     
     val_generator = train_datagen.flow_from_directory(valid_parent_directory,
                                                           target_size = (75,75),
-                                                          batch_size = 80,
+                                                          batch_size = 24,
                                                           class_mode = 'categorical')
     
     test_generator = test_datagen.flow_from_directory(test_parent_directory,
                                                      target_size=(75,75),
-                                                     batch_size = 20, #call by batches of 37
+                                                     batch_size = 6, #call by batches of 37
                                                      class_mode = 'categorical')
     
     return train_generator, val_generator, test_generator
@@ -55,7 +55,7 @@ def model_output_for_TL (pre_trained_model, last_output):
     x = Dropout(0.2)(x)
     
     # Output neuron. 
-    x = Dense(3, activation='softmax')(x) #using softmax.
+    x = Dense(10, activation='softmax')(x) #using softmax.
     
     model = Model(pre_trained_model.input, x)
     
@@ -125,7 +125,7 @@ model_TL.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accurac
 history_TL = model_TL.fit(
 train_generator,
 steps_per_epoch=10,
-epochs=10,
+epochs=18,
 verbose=1,
 validation_data = validation_generator)
 
