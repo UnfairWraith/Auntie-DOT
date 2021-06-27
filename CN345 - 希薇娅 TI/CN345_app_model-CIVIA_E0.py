@@ -1,5 +1,5 @@
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.layers import Flatten, Dense, Dropout
+from tensorflow.keras.layers import Flatten, Dense, Dropout,BatchNormalization,GlobalAveragePooling2D
 from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
@@ -19,7 +19,7 @@ from tensorflow.keras.preprocessing import image
 
 NUM_CLASSES = 10
 
-input_size = (600, 600)
+
 
 
 
@@ -42,22 +42,22 @@ def create_model():
     efficientNet.trainable = False
 
     # Rebuild top
-    x = tf.keras.layers.GlobalAveragePooling2D(name="avg_pool")(efficientNet.output)
-    x = tf.keras.layers.BatchNormalization()(x)
-
+    x = GlobalAveragePooling2D(name="avg_pool")(efficientNet.output)
+    x = BatchNormalization()(x)
+    x = Dense(512, activation="relu")(x)
     top_dropout_rate = 0.2
-    x = tf.keras.layers.Dropout(top_dropout_rate, name="top_dropout")(x)
+    x = Dropout(top_dropout_rate, name="top_dropout")(x)
 
-    output = tf.keras.layers.Dense(units=NUM_CLASSES, activation='softmax')(x)
+    output = Dense(units=NUM_CLASSES, activation='softmax')(x)
 
-    model = tf.keras.Model(inputs=efficientNet.input, outputs=output)
+    model = Model(inputs=efficientNet.input, outputs=output)
 
     # Freeze all the layers before the target layer
     '''
     for layer in model.layers[:200]:
       layer.trainable =  False
     '''
-
+    
     for layer in model.layers:
       layer.trainable =  False
 
