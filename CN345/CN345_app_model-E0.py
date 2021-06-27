@@ -124,8 +124,8 @@ model_TL.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accurac
  #epoch is the number of training rounds
 history_TL = model_TL.fit(
 train_generator,
-steps_per_epoch=12,
-epochs=4,
+steps_per_epoch=6,
+epochs=7,
 verbose=1,
 validation_data = validation_generator)
 
