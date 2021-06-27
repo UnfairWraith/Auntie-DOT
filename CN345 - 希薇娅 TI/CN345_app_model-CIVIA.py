@@ -114,11 +114,11 @@ pre_trained_model = InceptionV3(input_shape = (75, 75, 3),
 for layer in pre_trained_model.layers:
   layer.trainable = False
 
-last_layer = pre_trained_model.get_layer('mixed3')
+last_layer = pre_trained_model.get_layer('mixed10')
 last_output = last_layer.output  #last layer is output.
 
 model_TL = model_output_for_TL(pre_trained_model, last_output)
-model_TL.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model_TL.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
  #hyperparameters.
  #epoch is the number of training rounds
