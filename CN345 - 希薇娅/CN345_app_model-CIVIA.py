@@ -30,17 +30,17 @@ def image_gen_w_aug(train_parent_directory, test_parent_directory, valid_parent_
     
     train_generator = train_datagen.flow_from_directory(train_parent_directory,
                                                        target_size = (75,75),
-                                                       batch_size = 600,
+                                                       batch_size = 102,
                                                        class_mode = 'categorical')
     
     val_generator = train_datagen.flow_from_directory(valid_parent_directory,
                                                           target_size = (75,75),
-                                                          batch_size = 46,
+                                                          batch_size = 24,
                                                           class_mode = 'categorical')
     
     test_generator = test_datagen.flow_from_directory(test_parent_directory,
                                                      target_size=(75,75),
-                                                     batch_size = 7, #call by batches of 37
+                                                     batch_size = 6, #call by batches of 37
                                                      class_mode = 'categorical')
     
     return train_generator, val_generator, test_generator
@@ -99,9 +99,9 @@ def plot_confusion_matrix(y_true,y_pred):
     
     
 
-train_dir = os.path.join('data/train') #change to ur own directory.
-test_dir = os.path.join('data/test') #change to ur own directory.
-valid_dir = os.path.join('data/valid') #change to ur own directory.
+train_dir = os.path.join('assets/train') #change to ur own directory.
+test_dir = os.path.join('assets/test') #change to ur own directory.
+valid_dir = os.path.join('assets/valid') #change to ur own directory.
 #using windows commans to set to the default path. --> Command prompt.
 
 train_generator, validation_generator, test_generator = image_gen_w_aug(train_dir, test_dir, valid_dir)
@@ -124,8 +124,8 @@ model_TL.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accurac
  #epoch is the number of training rounds
 history_TL = model_TL.fit(
 train_generator,
-steps_per_epoch=6,
-epochs=7,
+steps_per_epoch=10,
+epochs=18,
 verbose=1,
 validation_data = validation_generator)
 

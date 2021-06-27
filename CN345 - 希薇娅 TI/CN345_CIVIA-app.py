@@ -39,6 +39,10 @@ else:
         st.write("It is Chinese hand gesture 3")
     elif np.argmax(prediction) == 1:
         st.write("It is Chinese hand gesture 4")
+    elif np.argmax(prediction) == 1:
+        st.write("It is Chinese hand gesture 4")
+    elif np.argmax(prediction) == 1:
+        st.write("It is Chinese hand gesture 4")    
     else:
         st.write("It is Chinese hand gesture 5")
     
