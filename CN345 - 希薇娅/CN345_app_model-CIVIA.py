@@ -118,7 +118,7 @@ last_layer = pre_trained_model.get_layer('mixed3')
 last_output = last_layer.output  #last layer is output.
 
 model_TL = model_output_for_TL(pre_trained_model, last_output)
-model_TL.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model_TL.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
  #hyperparameters.
  #epoch is the number of training rounds
