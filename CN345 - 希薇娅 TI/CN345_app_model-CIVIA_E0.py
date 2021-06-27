@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from sklearn.metrics import confusion_matrix
-
+import efficientnet.keras as efn
 
 
 
@@ -107,6 +107,30 @@ valid_dir = os.path.join('assets/valid') #change to ur own directory.
 train_generator, validation_generator, test_generator = image_gen_w_aug(train_dir, test_dir, valid_dir)
 
 
+base_model = efn.EfficientNetB0(input_shape = (224, 224, 3), include_top = False, weights = 'imagenet')
+
+for layer in base_model.layers:
+    layer.trainable = False
+    
+last_layer = base_model.get_layer('mixed3')
+last_output = last_layer.output  #last layer is output.    
+    
+model_TL = model_output_for_TL(base_model, last_output)
+    
+model_TL.compile(tf.keras.optimizers.RMSprop(lr=0.0001, decay=1e-6),loss='categorical_crossentropy',metrics=['accuracy'])    
+    
+eff_history = model_TL.fit_generator(train_generator, validation_data = validation_generator, steps_per_epoch = 100, epochs = 10)
+
+
+
+
+
+
+
+
+
+
+
 pre_trained_model = InceptionV3(input_shape = (75, 75, 3), 
                                 include_top = False, 
                                 weights = 'imagenet')
@@ -114,7 +138,7 @@ pre_trained_model = InceptionV3(input_shape = (75, 75, 3),
 for layer in pre_trained_model.layers:
   layer.trainable = False
 
-last_layer = pre_trained_model.get_layer('mixed3')
+last_layer = pre_trained_model.get_layer('mixed10')
 last_output = last_layer.output  #last layer is output.
 
 model_TL = model_output_for_TL(pre_trained_model, last_output)
