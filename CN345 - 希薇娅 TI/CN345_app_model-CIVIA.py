@@ -132,5 +132,5 @@ validation_data = validation_generator)
 plot_hist(history_TL)
 
 
-tf.keras.models.save_model(model_TL,'CN345_CIVIA.hdf5') #will be save as this file
+tf.keras.models.save_model(model_TL,'CN345_CIVIA-TI.hdf5') #will be save as this file
 
