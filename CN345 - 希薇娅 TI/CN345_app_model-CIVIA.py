@@ -93,7 +93,21 @@ def plot_confusion_matrix(y_true,y_pred):
     
     
     
-    
+ # EFFICIENT NET BEE ZERO
+#import efficientnet.keras as efn
+#model = efn.EfficientNetB0(input_shape = (224, 224, 3), include_top = False, weights = 'imagenet')
+#for layer in model.layers:
+#    layer.trainable = False
+#x = model.output
+#x = Flatten()(x)
+#x = Dense(1024, activation="relu")(x)
+#x = Dropout(0.5)(x)
+#predictions = Dense(10, activation="softmax")(x)
+#model_final = Model(input = model.input, output = predictions)  
+#model_final.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])   
+#eff_history = model.fit_generator(train_generator, validation_data = validation_generator, steps_per_epoch = 12, epochs = 10)
+#plot_hist(eff_history) # PLOT Histogram
+#tf.keras.models.save_model(model,'CN345_CIVIA.hdf5') #will be save as this file   
     
     
     
