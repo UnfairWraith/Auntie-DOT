@@ -143,6 +143,16 @@ epochs=18,
 verbose=1,
 validation_data = validation_generator)
 
+Y_pred = model_TL.predict(validation_generator, 800)
+y_pred = np.argmax(Y_pred, axis=1)
+
+print('')
+print('')
+print('')
+print('Confusion Matrix')
+print(confusion_matrix(validation_generator.classes, y_pred))
+
+
 plot_hist(history_TL)
 
 

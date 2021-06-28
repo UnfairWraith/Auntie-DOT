@@ -17,10 +17,10 @@ def import_and_predict(image_data, model):
         
         return prediction
 
-model = tf.keras.models.load_model('CN345_CIVIA.hdf5') #loading a trained model
+model = tf.keras.models.load_model('CN345_CIVIA-TI.hdf5') #loading a trained model
 
 st.write("""
-         # Chinese number 3-4-5 Hand Sign Prediction
+         # Chinese Number 3-4-5 Hand Sign Prediction
          """
          )
 
@@ -36,15 +36,25 @@ else:
     prediction = import_and_predict(image, model)
     
     if np.argmax(prediction) == 0:
+        st.write("It is Chinese hand gesture 1")
+    elif np.argmax(prediction) == 1:
+        st.write("It is Chinese hand gesture 2")
+    elif np.argmax(prediction) == 2:
         st.write("It is Chinese hand gesture 3")
-    elif np.argmax(prediction) == 1:
+    elif np.argmax(prediction) == 3:
         st.write("It is Chinese hand gesture 4")
-    elif np.argmax(prediction) == 1:
-        st.write("It is Chinese hand gesture 4")
-    elif np.argmax(prediction) == 1:
-        st.write("It is Chinese hand gesture 4")    
-    else:
+    elif np.argmax(prediction) == 4:
         st.write("It is Chinese hand gesture 5")
+    elif np.argmax(prediction) == 5:
+        st.write("It is Chinese hand gesture 6")
+    elif np.argmax(prediction) == 6:
+        st.write("It is Chinese hand gesture 7")
+    elif np.argmax(prediction) == 7:
+        st.write("It is Chinese hand gesture 8")
+    elif np.argmax(prediction) == 8:
+        st.write("It is Chinese hand gesture 9")   
+    else:
+        st.write("It is Chinese hand gesture 10")
     
-    st.text("Probability (0: Three, 1: Four, 2: Five)")
+    st.text("Probability (1,2,3,4,5,6,7,8,9,10)")
     st.write(prediction)

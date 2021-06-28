@@ -6,8 +6,9 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from sklearn.metrics import confusion_matrix
-
+from sklearn.metrics import confusion_matrix, plot_confusion_matrix
+from sklearn import metrics
+from sklearn.svm import SVC
 
 
 
@@ -70,25 +71,7 @@ def plot_hist(hist):
     plt.legend(["train", "validation"], loc="upper left")
     plt.show()
     
-def plot_confusion_matrix(y_true,y_pred):
-    cm_array = confusion_matrix(y_true,y_pred)
-    true_labels = np.unique(y_true)
-    pred_labels = np.unique(y_pred)
-    plt.imshow(cm_array[:-1,:-1], interpolation='nearest', cmap=plt.cm.Blues)
-    plt.title("Confusion matrix", fontsize=16)
-    cbar = plt.colorbar(fraction=0.046, pad=0.04)
-    cbar.set_label('Number of images', rotation=270, labelpad=30, fontsize=12)
-    xtick_marks = np.arange(len(true_labels))
-    ytick_marks = np.arange(len(pred_labels))
-    plt.xticks(xtick_marks, true_labels, rotation=90)
-    plt.yticks(ytick_marks,pred_labels)
-    plt.tight_layout()
-    plt.ylabel('True label', fontsize=14)
-    plt.xlabel('Predicted label', fontsize=14)
-    fig_size = plt.rcParams["figure.figsize"]
-    fig_size[0] = 12
-    fig_size[1] = 12
-    plt.rcParams["figure.figsize"] = fig_size    
+
     
     
     
@@ -125,12 +108,29 @@ model_TL.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['ac
 history_TL = model_TL.fit(
 train_generator,
 steps_per_epoch=10,
-epochs=18,
+epochs=8,
 verbose=1,
 validation_data = validation_generator)
 
-plot_hist(history_TL)
 
+
+
+Y_pred = model_TL.predict(validation_generator, 240)
+y_pred = np.argmax(Y_pred, axis=1)
+
+print('')
+print('')
+print('')
+print('Confusion Matrix')
+print(confusion_matrix(validation_generator.classes, y_pred))
+
+
+print('Classification Report')
+print(metrics.classification_report(validation_generator.classes, y_pred))
+#clf = SVC(random_state=0)
+#plot_confusion_matrix(clf,validation_generator.classes, y_pred)
+
+plot_hist(history_TL)
 
 tf.keras.models.save_model(model_TL,'CN345_CIVIA.hdf5') #will be save as this file
 

@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from sklearn.metrics import confusion_matrix
-
+from sklearn.metrics import classification_report
 
 
 
@@ -128,6 +128,7 @@ steps_per_epoch=12,
 epochs=7,
 verbose=1,
 validation_data = validation_generator)
+
 
 plot_hist(history_TL)
 
