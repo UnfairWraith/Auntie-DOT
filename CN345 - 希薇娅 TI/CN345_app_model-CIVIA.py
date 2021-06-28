@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from sklearn.metrics import confusion_matrix
+from sklearn import metrics
 
 
 
@@ -151,7 +152,10 @@ print('')
 print('')
 print('Confusion Matrix')
 print(confusion_matrix(validation_generator.classes, y_pred))
-
+print('')
+print('')
+print('Classification Report')
+print(metrics.classification_report(validation_generator.classes, y_pred))
 
 plot_hist(history_TL)
 
